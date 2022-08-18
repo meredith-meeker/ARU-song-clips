@@ -27,3 +27,55 @@ plot(pressure)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+## Installing packages and code 
+
+install.packages("dplyr")
+
+install.packages("devtools")
+
+install.packages("ggplot")
+
+library("devtools")
+
+install_github("dhope/ARUtools")
+1
+library(ARUtools)
+
+library(ggplot2)
+
+##Connecting to where my files are stored
+
+Base_dir_SWMP <- "D:ARU Recordings/SWMP/S2"
+
+dir_sites_SWMP <- list.dirs(Base_dir_SWMP, full.names = F, recursive = F) |> sample(size = 5)
+
+Base_dir_Wetlands <- "D:ARU Recordings/Wetlands"
+
+dir_sites_Wetlands <- list.dirs(Base_dir_Wetlands, full.names = F, recursive = F) |> sample(size = 5)
+
+## Changing File Split Pattern
+
+clean_metadata_me <- function{type, folder_base,included_subfolders = 'all',gps_locations = NULL,
+                           file_split_pattern = "T|\\-|\\_|\\[",
+                           site_pattern =  "[SW]\\d+_"}
+                           
+BarLT <- (grepl("bar", type, ignore.case = T) & grepl("lt", type, ignore.case = T))
+
+ARUtools::clean_metadata("BarLT", Base_dir_SWMP,included_subfolders = 'all',gps_locations = NULL,
+                           file_split_pattern = "T|\\-|\\_|\\[",
+                           (site_pattern =  "\\d+_"))
+                           
+## Troubleshooting Clean Metadata code
+                           
+ list2env(list(...), envir = environment())
+  if(!exists("file_ext")) file_ext <- ".wav"  
+  
+   list_files <- list.files(Base_dir_SWMP, recursive = T, full.names = F, include.dirs = F)
+list_files                           
+
+## Extracting Metadata
+
+Cleaned_metadata <- clean_metadata_me(clean_metadata(type = "BarLT", folder_base = "Base_dir_SWMP", included_subfolders = "dir_sites_SWMP", dist_cutoff = 1000))
+                          
+                          
