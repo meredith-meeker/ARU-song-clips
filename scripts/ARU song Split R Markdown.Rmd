@@ -44,6 +44,8 @@ library(ARUtools)
 
 library(ggplot2)
 
+library(lubridate)
+
 ##Connecting to where my files are stored
 
 Base_dir_SWMP <- "D:ARU Recordings/SWMP/S2"
@@ -54,17 +56,17 @@ Base_dir_Wetlands <- "D:ARU Recordings/Wetlands"
 
 dir_sites_Wetlands <- list.dirs(Base_dir_Wetlands, full.names = F, recursive = F) |> sample(size = 5)
 
+## Adding GPS Data Frame
+
+gps_locations_S2 <- read.csv("C:/Users/mmeek/OneDrive/Documents/Master's Thesis/Data/GPS Location for R.csv")
+
 ## Changing File Split Pattern
 
-clean_metadata_me <- function{type, folder_base,included_subfolders = 'all',gps_locations = NULL,
-                           file_split_pattern = "T|\\-|\\_|\\[",
-                           site_pattern =  "[SW]\\d+_"}
-                           
 BarLT <- (grepl("bar", type, ignore.case = T) & grepl("lt", type, ignore.case = T))
 
-ARUtools::clean_metadata("BarLT", Base_dir_SWMP,included_subfolders = 'all',gps_locations = NULL,
-                           file_split_pattern = "T|\\-|\\_|\\[",
-                           (site_pattern =  "\\d+_"))
+Output_1 <- ARUtools::clean_metadata("BarLT", Base_dir_SWMP,included_subfolders = 'all',gps_locations = gps_locations_S2,
+                           file_split_pattern = "T|\\-|\\_|\\[|\\,",
+                           (site_pattern =  "^\\d{4,}_"))
                            
 ## Troubleshooting Clean Metadata code
                            
