@@ -33,16 +33,47 @@ list_files <- list_filesall %>%
         long = str_split_fixed(long_null, "\\]", n =2)[,1],
         file_type = str_split_fixed(long_null, "\\]", n =2)[,2])
         
-         
-  
- 
+SWMP_early 
 
-  
+save(list_files,file = "main_wav_list_SWMP_orange.RData")
 
-
+Base_dir_Wetlands <- "D:ARU Recordings/Wetlands"
 
 
+list_files_wetlands <- list.files(Base_dir_Wetlands, recursive = T, full.names = T, include.dirs = T) %>% 
+  tibble() 
 
-save(list_files,file = "main_wav_list.RData")
+names(list_files_wetlands) <- "file_path"
+list_filesall_wetlands <- list_files_wetlands
 
-load("main_wav_list.Rdata")
+
+list_files_wetlands <- list_filesall_wetlands %>%
+  filter(grepl(".wav",file_path,fixed = TRUE)) %>%
+  mutate(dir_1 = str_split_fixed(file_path,"/",n =5)[,1],
+         dir_2 = str_split_fixed(file_path,"/",n =5)[,2],
+         dir_3 = str_split_fixed(file_path,"/",n =5)[,3],
+         dir_4 = str_split_fixed(file_path,"/",n =5)[,4],
+         wav_name = str_split_fixed(file_path,"/",n =5)[,5],
+         siteID = str_split_fixed(wav_name,"_", n = 2)[,1],
+         date_null = str_split_fixed(wav_name, "_", n = 2)[,2],
+         date = str_split_fixed(date_null, "T", n =2)[,1],
+         time_null = str_split_fixed(date_null, "T", n =2)[,2],
+         time = str_split_fixed(time_null, "-", n =2) [,1],
+         tz_null = str_split_fixed(time_null, "-", n =2)[,2],
+         tz = str_split_fixed(tz_null, "_", n =2)[,1],
+         program_null = str_split_fixed(tz_null, "_", n =2)[,2],
+         program = str_split_fixed(program_null, "\\[", n =2)[,1],
+         location_null = str_split_fixed(program_null, "\\[", n =2)[,2],
+         lat = str_split_fixed(location_null, "-", n =2)[,1],
+         long_null = str_split_fixed(location_null, "-", n =2)[,2],
+         long = str_split_fixed(long_null, "\\]", n =2)[,1],
+         file_type = str_split_fixed(long_null, "\\]", n =2)[,2])
+
+
+
+save(list_files_wetlands,file = "main_wav_list_wetlands_orange.RData")
+
+
+install.packages("tuneR")
+library(ARUtools)
+
