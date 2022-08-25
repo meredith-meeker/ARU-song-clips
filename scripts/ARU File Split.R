@@ -10,6 +10,13 @@ list_files <- list.files(Base_dir_SWMP, recursive = T, full.names = T, include.d
 names(list_files) <- "file_path"
 list_filesall <- list_files
 
+time_split <- function(x){
+  y <- vector(mode = "character",length = length(x))
+  for(i in 1:length(x)){
+    y[i] <- paste(str_sub(x[i],1,2),str_sub(x[i],3,4),str_sub(x[i],5,6),sep = ":")
+  }
+  return(y)
+}
 
 list_files <- list_filesall %>%
   filter(grepl(".wav",file_path,fixed = TRUE)) %>%
@@ -22,7 +29,7 @@ list_files <- list_filesall %>%
          date_null = str_split_fixed(wav_name, "_", n = 2)[,2],
          date = str_split_fixed(date_null, "T", n =2)[,1],
          time_null = str_split_fixed(date_null, "T", n =2)[,2],
-         time = str_split_fixed(time_null, "-", n =2) [,1],
+         time = time_split(str_split_fixed(time_null, "-", n =2)[,1]),
          tz_null = str_split_fixed(time_null, "-", n =2)[,2],
          tz = str_split_fixed(tz_null, "_", n =2)[,1],
          program_null = str_split_fixed(tz_null, "_", n =2)[,2],
@@ -33,7 +40,7 @@ list_files <- list_filesall %>%
         long = str_split_fixed(long_null, "\\]", n =2)[,1],
         file_type = str_split_fixed(long_null, "\\]", n =2)[,2])
         
-SWMP_early 
+
 
 save(list_files,file = "main_wav_list_SWMP_orange.RData")
 
@@ -58,7 +65,7 @@ list_files_wetlands <- list_filesall_wetlands %>%
          date_null = str_split_fixed(wav_name, "_", n = 2)[,2],
          date = str_split_fixed(date_null, "T", n =2)[,1],
          time_null = str_split_fixed(date_null, "T", n =2)[,2],
-         time = str_split_fixed(time_null, "-", n =2) [,1],
+         time = time_split(str_split_fixed(time_null, "-", n =2)[,1]),
          tz_null = str_split_fixed(time_null, "-", n =2)[,2],
          tz = str_split_fixed(tz_null, "_", n =2)[,1],
          program_null = str_split_fixed(tz_null, "_", n =2)[,2],
