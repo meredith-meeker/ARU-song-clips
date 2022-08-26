@@ -16,31 +16,37 @@ wav_name <- function(d = "20220618",
   
   # time selected as a proper lubridate oject
   
-  tm <- lubridate::hms(tm) # turn the true time into a character
+  tm_sel <- lubridate::hms(tm) # turn the true time into a character
 
     # vector of recording start times at that site and day
   
   tm2 <- (dflist[which(dflist[,"date"] == d & dflist[,"siteID"] == s),"time"])
-    
-  tm2 <- lubridate::hms(tm2$time) # turn the true time into a character
+  
+   if(length(tm2$time) == 0){stop("No recordings for the selected date and site")}
+  
+  tm3 <- lubridate::hms(tm2$time) # turn the true time into a character
   
   
   # identify  the number of seconds between the start time and sunrise (should remain constant)
-  dif_sec_all <- time_length(tm2 - tm)
-  dif_sec_neg <- dif_sec_all[dif_sec_all < 0]
-  dif_sec <- max(dif_sec_neg)
-
+  dif_sec_all <- time_length(tm_sel - tm3)
+  w_dif_sec_pos <- which(dif_sec_all > 0)
+  dif_sec <- min(dif_sec_all[w_dif_sec_pos])
+  w_dif_sec_sel <- which(dif_sec_all == dif_sec) 
+  t = as.character(tm2[w_dif_sec_sel,"time"])
+ 
  ## We want the clip to start 5040 seconds from the beginnig and last 300 seconds 
   
   ww <- which(dflist[,"date"] == d & dflist[,"time"] == t & dflist[,"siteID"] == s)
 
-    flp = as.character(list_files_wetlands[ww,"file_path"])
+    flp = as.character(dflist[ww,"file_path"])
   return(list(flp = flp,
               dif_sec = dif_sec))
   
 }#end_function
 
-tmp <- wav_name(d = "20220618")
+tmp <- wav_name(d = "20220618",
+                s = "RM22491",
+                dflist = list_files)
 
 
 tmp[["flp"]]
