@@ -30,7 +30,7 @@ wav_name <- function(d = "20220618",
   dif_sec_neg <- dif_sec_all[dif_sec_all < 0]
   dif_sec <- max(dif_sec_neg)
 
- ## We want the clip to start 5040 seconds from the beginnig and last 300 seconds 
+ ## We want the clip to start 5040 seconds from the beginning and last 300 seconds 
   
   ww <- which(dflist[,"date"] == d & dflist[,"time"] == t & dflist[,"siteID"] == s)
 
