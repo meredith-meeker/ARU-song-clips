@@ -51,7 +51,17 @@ tmp <- wav_name(d = "20220618",
 
 tmp[["flp"]]
 
-ss_5m <- ss_dat$Sunset$SunsetSelection |> filter(Length == "5min") |> 
+tmp[["dif_sec"]]
+
+
+clip_tmp = readWave(filename = tmp[["flp"]],
+                    from = tmp[["dif_sec"]],
+                    to = tmp[["dif_sec"]] + 300,
+                    units = 'seconds')
+
+
+
+ss_5m <- ss_|>dat$Sunset$SunsetSelection  filter(Length == "5min") |> 
   mutate(length_clip = 300,
          WildTraxName = glue::glue("{SiteID}_{yyyymmdd}_{hhmmss}"),
          SunRisSet="Sunset")
