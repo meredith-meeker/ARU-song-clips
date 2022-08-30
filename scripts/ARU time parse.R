@@ -55,26 +55,39 @@ tmp[["dif_sec"]]
 
 #reading the wave file length 
 
-
-
 gsub(pattern = ":",replacement = "",x = "07:30:45")
 
 selected_day <- "20220618"
 selected_time <- "05:17:00"
 
-for(selected_site in list_files_wetlands$siteID){
+#creating file writing loop
+
+for(selected_site in dflist$siteID){
 wv_sel <- wav_name(d = selected_day,
                    s = selected_site,
                    t = selected_time)
+
+#removing colons from time
+
+time_name <- (gsub(pattern = ":",replacement = "",x = "selected_time"))
+
+#creating Wildtrax File name
+
+flnm <- paste0(selected_site,"_",selected_day,"_", "time_name", ".wav")
   
+
+#clipping wave file 
+
 clip_tmp = readWave(filename = tmp[["flp"]],
                     from = tmp[["dif_sec"]],
                     to = tmp[["dif_sec"]] + 300,
                     units = 'seconds')
-file_tmp = writeWave(object = clip_tmp, filename =, extensible = TRUE)
 
+#writing new wave file and saving in folder
+
+file_tmp = writeWave(object = clip_tmp, filename = "C:/Users/mmeek/OneDrive/Documents/Master's Thesis/Fieldwork/ARU Recordings for analysis/June 18/Sunrise/flnm", extensible = TRUE)
 } #end of loop
-flnm <- paste0(selected_site,"_",selected_day,"_",selected_time,".wav")
+
 
 
      
