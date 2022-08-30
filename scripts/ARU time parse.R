@@ -69,11 +69,11 @@ wv_sel <- wav_name(d = selected_day,
 
 #removing colons from time
 
-time_name <- (gsub(pattern = ":",replacement = "",x = "selected_time"))
+time_name <- (gsub(pattern = ":",replacement = "",x = selected_time))
 
 #creating Wildtrax File name
 
-flnm <- paste0(selected_site,"_",selected_day,"_", "time_name", ".wav")
+flnm <- paste0(selected_site,"_",selected_day,"_", time_name, ".wav")
   
 
 #clipping wave file 
@@ -85,7 +85,7 @@ clip_tmp = readWave(filename = tmp[["flp"]],
 
 #writing new wave file and saving in folder
 
-file_tmp = writeWave(object = clip_tmp, filename = "C:/Users/mmeek/OneDrive/Documents/Master's Thesis/Fieldwork/ARU Recordings for analysis/June 18/Sunrise/flnm", extensible = TRUE)
+file_tmp = writeWave(object = clip_tmp, filename = paste0("C:/Users/mmeek/OneDrive/Documents/Master's Thesis/Fieldwork/ARU Recordings for analysis/June 18/Sunrise/",flnm), extensible = TRUE)
 } #end of loop
 
 
