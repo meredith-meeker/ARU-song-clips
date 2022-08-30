@@ -85,7 +85,9 @@ clip_tmp = readWave(filename = tmp[["flp"]],
 
 #writing new wave file and saving in folder
 
-file_tmp = writeWave(object = clip_tmp, filename = "C:/Users/mmeek/OneDrive/Documents/Master's Thesis/Fieldwork/ARU Recordings for analysis/June 18/Sunrise/flnm", extensible = TRUE)
+file_tmp = writeWave(object = clip_tmp, 
+                     filename = paste0("C:/Users/mmeek/OneDrive/Documents/Master's Thesis/Fieldwork/ARU Recordings for analysis/June 18/Sunrise/",flnm), 
+                     extensible = TRUE)
 } #end of loop
 
 
