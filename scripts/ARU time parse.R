@@ -4,12 +4,13 @@ library(lubridate)
 library(dplyr)
 library(tuneR)
 
-load("main_wav_list_SWMP_orange.RData")
+
+  load("main_wav_list_wetlands_orange.RData")
 
 
 wav_name <- function(d = "20220618",
                      tm = "05:17:00", # 24 hour time
-                     s = "RM22668",
+                     s = "RM22699",
                      dflist = list_files_wetlands){
   
   require(lubridate)
@@ -26,12 +27,6 @@ wav_name <- function(d = "20220618",
   
   tm3 <- lubridate::hms(tm2$time) # turn the true time into a character
   
-  
-  # identify  the number of seconds between the start time and sunrise (should remain constant)
-
-  dif_sec_all <- time_length(tm2 - tm)
-  dif_sec_neg <- dif_sec_all[dif_sec_all < 0]
-  dif_sec <- max(dif_sec_neg)
 
  ## We want the clip to start 5040 seconds from the beginning and last 300 seconds 
 
@@ -41,9 +36,6 @@ wav_name <- function(d = "20220618",
   w_dif_sec_sel <- which(dif_sec_all == dif_sec) 
   t = as.character(tm2[w_dif_sec_sel,"time"])
  
- ## We want the clip to start 5040 seconds from the beginning and last 300 seconds 
-
-  
   ww <- which(dflist[,"date"] == d & dflist[,"time"] == t & dflist[,"siteID"] == s)
 
     flp = as.character(dflist[ww,"file_path"])
@@ -53,8 +45,8 @@ wav_name <- function(d = "20220618",
 }#end_function
 
 tmp <- wav_name(d = "20220618",
-                s = "RM22491",
-                dflist = list_files)
+                s = "RM22699",
+                dflist = list_files_wetlands)
 
 
 tmp[["flp"]]
