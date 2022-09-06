@@ -10,7 +10,7 @@ library(tuneR)
 
 wav_name <- function(d = "20220618",
                      tm = "05:17:00", # 24 hour time
-                     s = "RM22699",
+                     s = "RM22668",
                      dflist = list_files_wetlands){
   
   require(lubridate)
